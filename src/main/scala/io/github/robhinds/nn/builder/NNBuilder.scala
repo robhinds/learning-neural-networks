@@ -25,6 +25,11 @@ object NNBuilder {
     this
   }
 
+  def outputNeurons(numNeurons: Integer) = {
+    outNeurons = numNeurons
+    this
+  }
+
   def iterations(n: Integer) = {
     iters = n
     this

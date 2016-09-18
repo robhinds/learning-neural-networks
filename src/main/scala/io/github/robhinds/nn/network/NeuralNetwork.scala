@@ -49,8 +49,7 @@ case class NeuralNetwork(
 
     }
 
-    //test the network performance
-
+    testPerformance(testInputs, testOutputs)
   }
 
   def feedForward(inputs: List[Double]): List[Double] ={
@@ -98,7 +97,17 @@ case class NeuralNetwork(
     }
   }
 
-  def testPerformance(inputs: List[Double], output: List[Double]) {
+  def testPerformance(inputs: List[List[Double]], outputs: List[List[Double]]) {
+    var score = 0
+    val inputAndOutput = inputs zip outputs
+    inputAndOutput map { test =>
+      val predictedOutputs = feedForward(test._1) map ( BigDecimal(_).setScale(0, BigDecimal.RoundingMode.HALF_UP).toDouble )
+      println(s"PREDICTION: ${predictedOutputs}")
+      println(s"ACTUAL    : ${test._2}")
+      if (predictedOutputs == test._2)
+        score = score + 1
+    }
+    println(s"SCORE : ${score/inputs.size}")
 
   }
 
