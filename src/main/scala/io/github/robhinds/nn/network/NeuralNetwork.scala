@@ -102,12 +102,10 @@ case class NeuralNetwork(
     val inputAndOutput = inputs zip outputs
     inputAndOutput map { test =>
       val predictedOutputs = feedForward(test._1) map ( BigDecimal(_).setScale(0, BigDecimal.RoundingMode.HALF_UP).toDouble )
-      println(s"PREDICTION: ${predictedOutputs}")
-      println(s"ACTUAL    : ${test._2}")
       if (predictedOutputs == test._2)
         score = score + 1.0
     }
-    println(s"SCORE : ${score/inputs.size}")
+    println(s"SCORE : ${(score/inputs.size) * 100}%")
 
   }
 
