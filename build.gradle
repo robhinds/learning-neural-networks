@@ -5,6 +5,10 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.6'
 }
 
+repositories {
+    mavenCentral()
+}
+
 apply {
     plugin 'scala'
 }
