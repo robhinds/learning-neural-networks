@@ -1,0 +1,23 @@
+group 'io.github.robhinds'
+version '1.0-SNAPSHOT'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
+}
+
+apply {
+    plugin 'scala'
+}
+
+ext {
+    scalaMajor = '2.11'
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+    compile "com.typesafe.scala-logging:scala-logging_${scalaMajor}:3.4.0"
+    testCompile "org.scalatest:scalatest_${scalaMajor}:2.2.6"
+}
