@@ -67,10 +67,10 @@ case class NeuralNetwork(
 
     //Derivative errors for hidden layer
     val sqErrorDerivativeWithOutputNeurons = outputNeurons zip squaredErrorsDerivativePerOutput
-    val derivativeErrorsPerHidden = 1 to hiddenNeurons.size map { index =>
+    val derivativeErrorsPerHidden = 0 to hiddenNeurons.size-1 map { hiddenNeuronIndex =>
       val derivativeErrs = sqErrorDerivativeWithOutputNeurons map {
         case (neuron, sqErrDerivative) =>
-          neuron.sigmoidDerivativeByWeight(index) * sqErrDerivative
+          neuron.sigmoidDerivativeByWeight(hiddenNeuronIndex) * sqErrDerivative
       }
       derivativeErrs.foldLeft(0.0)(_ + _)
     }
@@ -98,14 +98,14 @@ case class NeuralNetwork(
   }
 
   def testPerformance(inputs: List[List[Double]], outputs: List[List[Double]]) {
-    var score = 0
+    var score = 0.0
     val inputAndOutput = inputs zip outputs
     inputAndOutput map { test =>
       val predictedOutputs = feedForward(test._1) map ( BigDecimal(_).setScale(0, BigDecimal.RoundingMode.HALF_UP).toDouble )
       println(s"PREDICTION: ${predictedOutputs}")
       println(s"ACTUAL    : ${test._2}")
       if (predictedOutputs == test._2)
-        score = score + 1
+        score = score + 1.0
     }
     println(s"SCORE : ${score/inputs.size}")
 
